@@ -442,9 +442,41 @@ void mode_seconds() {
 }
 
 
+/* For the LED code below to work, the LEDs need to be wired in a very specific way
+   
+   Normally a MAX7219's matrix is wired this way (8x8)
 
-
-
+    dp| a| b| c| d| e| f| g
+  0
+  1
+  2
+  4
+  5
+  6
+  7
+   
+  However, since the clock is 10x11 we wire 2x MAX7219 this way.
+  Essentially, row 5,6,7 is transposed into column 9,10,11
+    
+  [dp,5]                         [g,5]
+  -----------------------------------
+   dp| a| b| c| d| e| f| g| 5| 6| 7
+  0                       |         e
+  1                       |         d
+  2                       |         c
+  3                       |         b
+  4                       |         a
+  -----------------------------------
+   dp| a| b| c| d| e| f| g| 5| 6| 7
+  0                       |         e
+  1                       |         d
+  2                       |         c
+  3                       |         b
+  4                       |         a
+  ------------------------------------
+  [dp,5]                         [g,5]
+ 
+*/
 
 // LED Turn on/off procedures
 void LED_CLEAR() {
